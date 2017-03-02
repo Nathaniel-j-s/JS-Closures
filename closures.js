@@ -14,11 +14,11 @@ function outer() {
 closure over the name variable. Invoke outer saving the return value into
 another variable called 'inner'. */
 
-// Code Here
+var inner = outer();
 
 //Once you do that, invoke inner.
 
-//Code Here
+var again = inner();
 
 
 
@@ -36,9 +36,9 @@ another variable called 'inner'. */
 
 function callFriend(name) {
   function dial(number) {
-    return 'Calling ' + name + ' at ' + number
+    return 'Calling ' + name + ' at ' + number;
   }
-  return dial
+  return dial;
 }
 
 /****** INSTRUCTIONS PROBLEM 2 ******/
@@ -46,12 +46,11 @@ function callFriend(name) {
 Create a callJake function that when invoked with '435-555-9248' returns 'Calling Jake at 435-555-9248'
 in your console. */
 
-  //Code Here
+function callJake(number) {
+  return callFriend("Jake")(number);
+}
 
-
-
-
-
+callJake("435-215-9248");
 
 
 
@@ -64,17 +63,20 @@ in your console. */
 /* Write a function called makeCounter that makes the following code work
 properly. */
 
-//Code Here
+function makeCounter(num) {
+  var num = 0;
+  return function() {
+    num = num + 1;
+    return num;
+  }
+}
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
-
-
-
+var count = makeCounter();
+count(); // 1
+count(); // 2
+count(); // 3
+count(); // 4
 
 
 
@@ -91,17 +93,23 @@ properly. */
 up/down counter. The first function is called inc, this function is responsible
 for incrementing the value once. The second function is called dec, this
 function is responsible for decrementing the value by one. You will need to use
-the module pattern to achieve this. 
-Information on the module pattern available here: 
+the module pattern to achieve this.
+Information on the module pattern available here:
 http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
 
 function counterFactory(value) {
-
-  // Code here.
-
+  var starter = value;
 
   return {
+    inc: function() {
+      starter = starter + 1;
+      return starter;
+    },
+    dec: function() {
+      starter = starter - 1;
+      return starter;
+    }
   }
 }
 
@@ -133,15 +141,17 @@ function motivation(firstname, lastname) {
 
   var welcomeText = 'You\'re doing awesome, keep it up ';
 
-  // code message function here.
+  function message() {
+    return welcomeText + firstname + " " + lastname + ".";
+  }
 
 
   //Uncommment this to return the value of your invoked message function
-  //return message();
+  return message();
 
 }
 
-motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
+motivation('Breiden', 'Busch'); // 'You're doing awesome keep it up Billy Bob.
 
 
 
@@ -175,7 +185,7 @@ var module = (function() {
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    publicMethod: privateMethod()
   };
 
 })();
